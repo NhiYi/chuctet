@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Chúc Tết</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #b71c1c;
+      color: #ffeb3b;
+      text-align: center;
+      padding-top: 60px;
+    }
+
+    #qrcode {
+      margin: 30px auto;
+      background: white;
+      padding: 16px;
+      width: fit-content;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🧧 Quét QR để nhận lời chúc Tết 🧧</h1>
+
+<div id="qrcode"></div>
+
+<p>Chúc mừng năm mới – An Khang Thịnh Vượng 🎉</p>
+
+<script>
+  new QRCode(document.getElementById("qrcode"), {
+    text: "https://nhiyi.github.io/chuctet/",
+    width: 220,
+    height: 220
+  });
+</script>
+
+</body>
+</html>
