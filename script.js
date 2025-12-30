@@ -8,23 +8,16 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// 🎆 Lớp pháo hoa
+// 🎆 Pháo hoa
 class Firework {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
     this.particles = [];
-    this.colors = [
-      "#ffeb3b", // vàng
-      "#ffc107", // vàng cam
-      "#ffffff", // trắng
-      "#ff5252"  // đỏ
-    ];
+    this.colors = ["#ffeb3b", "#ffc107", "#ffffff", "#ff5252"];
 
     for (let i = 0; i < 80; i++) {
       this.particles.push({
-        x: this.x,
-        y: this.y,
+        x,
+        y,
         angle: Math.random() * Math.PI * 2,
         speed: Math.random() * 5 + 2,
         alpha: 1,
@@ -44,51 +37,47 @@ class Firework {
   draw() {
     this.particles.forEach(p => {
       if (p.alpha <= 0) return;
-      ctx.save();
       ctx.globalAlpha = p.alpha;
       ctx.fillStyle = p.color;
       ctx.beginPath();
       ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
     });
   }
 }
 
 let fireworks = [];
 
-// 🎨 VẼ NỀN ĐỎ TẾT TRÊN CANVAS
-function drawRedBackground() {
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-  gradient.addColorStop(0, "#b71c1c");
-  gradient.addColorStop(0.5, "#d32f2f");
-  gradient.addColorStop(1, "#f44336");
-
-  ctx.fillStyle = gradient;
+function drawBackground() {
+  const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  g.addColorStop(0, "#b71c1c");
+  g.addColorStop(0.5, "#d32f2f");
+  g.addColorStop(1, "#f44336");
+  ctx.fillStyle = g;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function animate() {
-  // 🔴 LUÔN vẽ nền đỏ trước
-  drawRedBackground();
+  drawBackground();
 
-  // 🎆 vẽ pháo hoa lên trên
-  fireworks.forEach((fw, index) => {
+  fireworks.forEach((fw, i) => {
     fw.update();
     fw.draw();
     if (fw.particles.every(p => p.alpha <= 0)) {
-      fireworks.splice(index, 1);
+      fireworks.splice(i, 1);
     }
   });
 
   requestAnimationFrame(animate);
 }
 
-// Tạo pháo hoa
 setInterval(() => {
-  const x = Math.random() * canvas.width;
-  const y = Math.random() * canvas.height * 0.5;
-  fireworks.push(new Firework(x, y));
+  fireworks.push(
+    new Firework(
+      Math.random() * canvas.width,
+      Math.random() * canvas.height * 0.5
+    )
+  );
 }, 900);
 
 animate();
